@@ -1,13 +1,14 @@
 import m from "mithril";
 import katex from "katex";
 
-const renderMath = mathHTML => ({
+const renderMath = mathString => ({
   oncreate: ({ dom }) => {
-    dom.innerHTML = mathHTML;
+    dom.innerHTML = katex.renderToString(mathString, {
+      throwOnError: false
+  });
   },
-  view: vnode => m("div", "loading math expression")
+  view: () => m("div")
 });
 
 const $root = document.querySelector('#app');
-const mathHTML = katex.renderToString(`c = \\pm\\sqrt{a^2 + b^2}`);
-m.mount($root, renderMath(mathHTML));
+m.mount($root, renderMath(`c = \\pm\\sqrt{a^2 + b^2}`));
